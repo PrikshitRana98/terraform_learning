@@ -1,0 +1,247 @@
+resource "azurerm_resource_group" "example" {
+  name     = "example-resources"
+  location = "West Europe"
+}
+
+resource "azurerm_storage_account" "example" {
+  name                     = "storageaccountname"
+  resource_group_name      = azurerm_resource_group.example.name
+  location                 = azurerm_resource_group.example.location  // implicit dependency on resource group
+  account_tier             = "Standard"
+  account_replication_type = "GRS"
+
+  tags = {
+    environment = "staging"
+  }
+}
+
+
+Here’s a **clear breakdown of the full code (both resources)**:
+
+---
+
+## 🔹 1. Resource Group
+
+* `resource "azurerm_resource_group" "example"`
+
+  * Creates an **Azure Resource Group**
+  * `"example"` is the Terraform reference name
+
+* `name = "example-resources"`
+
+  * Actual name in Azure
+
+* `location = "West Europe"`
+
+  * Region where resources will be created
+
+---
+
+## 🔹 2. Storage Account
+
+* `resource "azurerm_storage_account" "example"`
+
+  * Creates an **Azure Storage Account**
+  * `"example"` is the Terraform reference name
+
+---
+
+### 🔸 Linking to Resource Group
+
+* `resource_group_name = azurerm_resource_group.example.name`
+
+  * Uses the **resource group name from above**
+  * Avoids hardcoding
+
+* `location = azurerm_resource_group.example.location`
+
+  * Uses the **same location as the resource group**
+
+---
+
+### 🔸 Storage Settings
+
+* `name = "storageaccountname"`
+
+  * Globally unique storage account name
+
+* `account_tier = "Standard"`
+
+  * Performance level (Standard = cost-effective)
+
+* `account_replication_type = "GRS"`
+
+  * Geo-redundant storage (backup in another region)
+
+---
+
+### 🔸 Tags
+
+* `tags = { environment = "staging" }`
+
+  * Adds metadata for organization and billing
+
+---
+
+## 🧠 Important Concept
+
+* Storage Account **depends on Resource Group**
+* Terraform detects this automatically because of:
+
+  * `azurerm_resource_group.example.name`
+  * `azurerm_resource_group.example.location`
+
+---
+
+## 🔁 Execution Flow
+
+1. Resource Group is created first
+2. Storage Account is created inside it
+
+---
+
+## ✅ Summary
+
+* Creates a **Resource Group**
+* Creates a **Storage Account inside it**
+* Uses **references instead of hardcoding**
+* Ensures **correct order automatically**
+
+
+
+Ques : why their is need of resource_group_name,location, account_tier, account_replication_type and tags? 
+
+Ans: Here’s **why each field is needed** in your Terraform storage account:
+
+---
+
+## 🔹 `resource_group_name`
+
+* Specifies **which Resource Group** the storage account belongs to
+* Azure requires every resource to be inside a resource group
+* Without it → Terraform doesn’t know **where to place the resource**
+
+---
+
+## 🔹 `location`
+
+* Defines the **region** where the storage account will be created
+* Important for:
+
+  * Latency (closer = faster)
+  * Compliance (data residency laws)
+* Often kept same as resource group for consistency
+
+---
+
+## 🔹 `account_tier`
+
+* Controls the **performance level**
+* Options:
+
+  * `Standard` → cheaper, general use
+  * `Premium` → high performance (SSD-backed)
+* Needed because Azure must know **what kind of storage performance you want**
+
+---
+
+## 🔹 `account_replication_type`
+
+* Defines how your data is **replicated for durability**
+* Examples:
+
+  * `LRS` → stored in one data center
+  * `GRS` → copied to another region (disaster recovery)
+* Required so Azure knows **how safe/available your data should be**
+
+---
+
+## 🔹 `tags`
+
+* Used for **metadata (extra information)**
+* Example:
+
+  * `environment = "staging"`
+* Helps with:
+
+  * Cost tracking
+  * Resource organization
+  * Filtering in Azure portal
+* Not mandatory, but **highly recommended**
+
+---
+
+## 🧠 Simple Way to Remember
+
+* `resource_group_name` → *Where it belongs*
+* `location` → *Where it lives*
+* `account_tier` → *How fast it is*
+* `account_replication_type` → *How safe it is*
+* `tags` → *How you organize it*
+
+---
+
+## 🔹 Implicit Dependency in Your Code
+
+The **implicit dependency** is:
+
+👉 `azurerm_storage_account.example` depends on `azurerm_resource_group.example`
+
+---
+
+## 🔹 Why it is an Implicit Dependency
+
+Because of these lines:
+
+* `resource_group_name = azurerm_resource_group.example.name`
+* `location = azurerm_resource_group.example.location`
+
+Here, the storage account is **referencing attributes** of the resource group.
+
+---
+
+## 🔹 What “Implicit” Means
+
+* You did **NOT explicitly say**:
+
+  ```hcl
+  depends_on = [azurerm_resource_group.example]
+  ```
+* But Terraform **automatically understands** the dependency
+* This is called **implicit dependency**
+
+---
+
+## 🔹 How Terraform Interprets It
+
+Terraform sees:
+
+* Storage account needs:
+
+  * `name` of resource group
+  * `location` of resource group
+
+👉 So it concludes:
+
+> “I must create the resource group first before the storage account.”
+
+---
+
+## 🔹 Execution Order
+
+1. `azurerm_resource_group.example` ✅ (created first)
+2. `azurerm_storage_account.example` ✅ (created after)
+
+---
+
+## 🔹 Key Idea
+
+* **Reference = Dependency**
+* If one resource uses another resource’s value → dependency is automatic
+
+---
+
+## 🔹 Final One-Liner
+
+👉 The implicit dependency exists because the storage account uses values from the resource group, so Terraform automatically creates the resource group first without needing a `depends_on`.
+
