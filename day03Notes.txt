@@ -15,7 +15,7 @@ resource "azurerm_storage_account" "example" {
   }
 }
 
-[1] *  Azure subscription 1  4b90405d-d1a2-4204-9f53-3ecf881a4785  Default Directory
+[1] *  Azure subscription 1  
 
 
 Here’s a **clear breakdown of the full code (both resources)**:
@@ -265,5 +265,5 @@ add these in bashrc
 Set env vars so that the service principal is used for authentication
 export ARM_CLIENT_ID="ebf73ed7-fb45-41ea-aac9-4a6fb22501ab"
 export ARM_CLIENT_SECRET="REMOVED_SECRET"
-export ARM_SUBSCRIPTION_ID="676dbd43-19de-49f5-a250-3988b03764ef"
+export ARM_SUBSCRIPTION_ID="subscript_id"
 export ARM_TENANT_ID="921aeef8-a4cf-441b-a22e-3a65ceba7af6"
