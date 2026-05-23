@@ -253,17 +253,5 @@ Create Service Principal
 az ad sp create-for-rbac -n az-demo --role="Contributor" --scopes="/subscriptions/$SUBSCRIPTION_ID"
 Note: Use the values generated here to export the variables in the next step
 
-{
-  "appId": "ebf73ed7-fb45-41ea-aac9-4a6fb22501ab",
-  "displayName": "sp-terraform",
-  "password": "REMOVED_SECRET",
-  "tenant": "921aeef8-a4cf-441b-a22e-3a65ceba7af6"
-}
 
-add these in bashrc
 
-Set env vars so that the service principal is used for authentication
-export ARM_CLIENT_ID="ebf73ed7-fb45-41ea-aac9-4a6fb22501ab"
-export ARM_CLIENT_SECRET="REMOVED_SECRET"
-export ARM_SUBSCRIPTION_ID="subscript_id"
-export ARM_TENANT_ID="921aeef8-a4cf-441b-a22e-3a65ceba7af6"
