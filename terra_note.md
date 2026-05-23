@@ -141,7 +141,10 @@ az login
 
 ---
 
-#### 2️⃣ Service Principal (Advanced)
+#### 2️⃣ Service Principal (Advanced): it is an identity(similar to human identity) used by applications or service to access Azure resource in an automated and secure way. 
+it acts like a user indentity for applications inside the Azure Active directory (AAD) 
+
+
 
 ```hcl
 provider "azurerm" {
