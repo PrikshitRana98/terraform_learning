@@ -251,7 +251,7 @@ Terraform sees:
 
 Create Service Principal
 az ad sp create-for-rbac -n az-demo --role="Contributor" --scopes="/subscriptions/$SUBSCRIPTION_ID"
-Note: Use the values generated here to export the variables in the next step
+Note: Use the values generated here to export the variables in the next ste
 
 
 

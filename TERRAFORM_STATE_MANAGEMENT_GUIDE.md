@@ -191,7 +191,7 @@ Your `.tfstate` file contains **SENSITIVE DATA**:
 | **Data Breach** | Sensitive info in your infrastructure | 🟠 High |
 
 ### Real-World Scenario
-❌ **Vulnerable**: State file in public GitHub repo → Attacker sees database passwords → Accesses production database → Exfiltrates customer data
+❌ **Vulnerable**: State file in public GitHub repo → Attacker sees database pswrd → Accesses production database → Exfiltrates customer data
 
 ✅ **Secure**: State in encrypted Azure backend → Requires authentication → Audit logs track access → Encrypted at rest and in transit
 

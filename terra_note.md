@@ -577,7 +577,7 @@ terraform {
 
 ## ❌ 1. Sensitive Data
 
-* Passwords
+* Passwor
 * Keys
   👉 Stored in state file
 
