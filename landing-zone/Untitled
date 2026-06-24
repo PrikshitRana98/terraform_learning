@@ -1,10 +1,6 @@
-# Allowed Regions Policy
+Allowed Regions Policy
 resource "azurerm_policy_assignment" "allowed_regions" {}
-
-
-# Required Tags Policy
+Required Tags Policy
 resource "azurerm_policy_assignment" "required_tags" {}
-
-
-# Deny Public IP
+Deny Public IP
 resource "azurerm_policy_assignment" "deny_public_ip" {}
